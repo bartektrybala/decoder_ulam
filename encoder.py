@@ -2,11 +2,10 @@
 import copy
 import random
 import re
-from rich import print
 
 
-original_text = """This is a long looong test sentence,\nwith some big (biiiiig) words!"""
-punctation_pattern = r"\w+|[^\w\s]|\n"
+ORIGINAL_TEXT = """This is a long looong test sentence,\nwith some big (biiiiig) words!"""
+PUNCTATION_PATTERN = r"\w+|[^\w\s]|\n"
 no_punctation_token = re.compile(r'(\w+)', re.U)
 
 def join_punctuation(seq, characters='.,;?!'):
@@ -22,7 +21,6 @@ def join_punctuation(seq, characters='.,;?!'):
             yield current
             current = nxt
     yield current
-    
 
 def encode(original_text):
     """
@@ -31,9 +29,9 @@ def encode(original_text):
     * In while loop check if shuffled word is different than original
     to ensure that every possible word is shuffled correctly.
 
-    Returns shuffled text and sorted list of original words. 
+    Returns shuffled text and sorted list of original words.
     """
-    words = re.findall(punctation_pattern, original_text, re.U)
+    words = re.findall(PUNCTATION_PATTERN, original_text, re.U)
     shuffled_original_worlds = []
     for i, word in enumerate(words):
         # 4 digits is minimum to make shuffle possibly
@@ -52,7 +50,7 @@ def encode(original_text):
             word = word[0] + random_middle + word[-1]
         words[i] = word
         shuffled_original_worlds.append(word)
-    
+
     encoded_text = " ".join(join_punctuation(words))
     return encoded_text, sorted(shuffled_original_worlds, key=lambda s: s.lower())
 
@@ -63,8 +61,8 @@ def decode(encoded_text, world_list):
 
 
 if __name__ == "__main__":
-    encoded_text, word_list = encode(original_text)
-    print(original_text)
+    encoded_text, word_list = encode(ORIGINAL_TEXT)
+    print(ORIGINAL_TEXT)
     print("Encoded Text:")
     print("\n--weird--\n")
     print(encoded_text)
