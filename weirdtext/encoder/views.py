@@ -3,7 +3,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from swagger.swagger import original_text_parameter, word_list_parameter, encoded_text_parameter
 from .encoder import weirdtext_encoder, weirdtext_decoder
 
 
@@ -27,8 +26,7 @@ class EncodeApi(APIView):
             422: 'missing data parameters',
             400: 'incorrect data',
             201: 'encoded text message and sorted list of original words'
-        },
-        manual_parameters=[original_text_parameter]
+        }
     )
     def post(self, request):
         if not "original_text" in request.data.keys():
@@ -79,8 +77,7 @@ class DecodeApi(APIView):
             422: 'missing data parameters',
             400: 'incorrect data',
             201: 'decoded text message'
-        },
-        manual_parameters=[encoded_text_parameter, word_list_parameter, original_text_parameter]
+        }
     )
     def post(self, request):
         if any(x not in request.data.keys()\
