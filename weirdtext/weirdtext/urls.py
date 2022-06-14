@@ -17,5 +17,6 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('v1/', include('encoder.urls'))
+    path('v1/', include('encoder.urls')),
+    path('doc/', include('swagger.urls')),
 ]
