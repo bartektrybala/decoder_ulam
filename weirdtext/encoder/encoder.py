@@ -24,7 +24,7 @@ def word_suitable_for_shuffle(word):
     return True
 
 
-def weirdtexct_encoder(original_text):
+def weirdtext_encoder(original_text):
     """
     Function shuffles the middle of every word in the original text.
 
@@ -55,12 +55,12 @@ def extract_encoded_text(encoded_text):
     """Return text between two separators."""
     return re.sub(SEPARATOR, '', encoded_text)
 
-def weirdtexct_decoder(encoded_text, word_list, original_text):
+def weirdtext_decoder(encoded_text, word_list, original_text):
     """
     Function decodes given encoded_text based on given word_list.
     """
     # Check encoded_text looks like composite output of encoder
-    if (encoded_text, word_list) != weirdtexct_encoder(original_text):
+    if (encoded_text, word_list) != weirdtext_encoder(original_text):
         raise ValueError("Incorrect encoded text.")
 
     def _decode_with_map(word, word_list):
@@ -105,11 +105,11 @@ def weirdtexct_decoder(encoded_text, word_list, original_text):
 
 
 if __name__ == "__main__":
-    encoded_text, word_list = weirdtexct_encoder(ORIGINAL_TEXT)
+    encoded_text, word_list = weirdtext_encoder(ORIGINAL_TEXT)
     print(ORIGINAL_TEXT)
     print("Encoded Text::")
     print(encoded_text)
     print(word_list)
-    decoded_text = weirdtexct_decoder(encoded_text, word_list, ORIGINAL_TEXT)
+    decoded_text = weirdtext_decoder(encoded_text, word_list, ORIGINAL_TEXT)
     print("\n\nDecoded Text::\n")
     print(decoded_text)
