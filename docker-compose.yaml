@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  weirdtext:
+    build: ./weirdtext
+    restart: always
+    container_name: weirdtext
+    ports:
+      - 8000:8000
+    volumes:
+      - static:/static
+  nginx:
+    build: ./nginx
+    restart: always
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+    - static:/static
+    depends_on:
+      - weirdtext
+volumes:
+ static:

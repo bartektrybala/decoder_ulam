@@ -1,0 +1,6 @@
+pylint
+pre-commit
+django
+djangorestframework
+gunicorn
+drf-yasg
