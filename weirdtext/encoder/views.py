@@ -3,30 +3,33 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from swagger.swagger import enccode_request_body, decode_request_body
+
 from .encoder import weirdtext_encoder, weirdtext_decoder
 
 
 class EncodeApi(APIView):
     """
     Encode the given message.
-
     Parameters:
         :original_text - text to encode
-
     Return
         :encoded_text - encoded text message
         :word_list - sorted list of original words, contains only words which were shuffled
-
     Example:
         POST /v1/encode/
-        "original_text": "This is a long looong test sentence,\nwith some big (biiiiig) words!"
+        {
+        "original_text": "This is a long looong test sentence,
+        with some big (biiiiig) words!"
+        }
     """
     @swagger_auto_schema(
         responses={
             422: 'missing data parameters',
             400: 'incorrect data',
             201: 'encoded text message and sorted list of original words'
-        }
+        },
+        request_body=enccode_request_body,
     )
     def post(self, request):
         if not "original_text" in request.data.keys():
@@ -47,37 +50,39 @@ class EncodeApi(APIView):
 class DecodeApi(APIView):
     """
     Decode the given message.
-
     Parameters:
         :encoded_text - encoded text message
         :word_list - sorted list of original words, contains only words which were shuffled
         :original_text - original message to check if encoded correctly
-
     Return
         :decoded_text - decoded text message
-
     Example:
         POST /v1/decode/
-        "encoded_text": "\n--weird--\nTihs is a lnog loonog tset seentcne,\nwtih\
-            smoe big (biiiiig) wrods!\n--weird--\n",
-        "word_list": [
-            "long",
-            "looong",
-            "sentence",
-            "some",
-            "test",
-            "This",
-            "with",
-            "words"
-        ]
-        "original_text": "This is a long looong test sentence,\nwith some big (biiiiig) words!",
+        {
+            "encoded_text": "--weird--
+            Tihs is a lnog loonog tset seentcne,
+            wtih smoe big (biiiiig) wrods!--weird--",
+            "word_list": [
+                "long",
+                "looong",
+                "sentence",
+                "some",
+                "test",
+                "This",
+                "with",
+                "words"
+            ]
+            "original_text": "This is a long looong test sentence,
+            with some big (biiiiig) words!"
+        }
     """
     @swagger_auto_schema(
         responses={
             422: 'missing data parameters',
             400: 'incorrect data',
             201: 'decoded text message'
-        }
+        },
+        request_body=decode_request_body
     )
     def post(self, request):
         if any(x not in request.data.keys()\
