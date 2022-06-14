@@ -12,7 +12,9 @@ schema_view = get_schema_view(
       contact=Contact(email="bartektrybalaa@gmail.com"),
    ),
    public=True,
-   authentication_classes=[], # empty for presentation.
+   # empty for presentation
+   authentication_classes=[],
+   permission_classes=[],
 )
 
 encoded_text_param = Parameter('encoded_text_param', IN_QUERY,\
