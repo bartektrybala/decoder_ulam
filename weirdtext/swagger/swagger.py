@@ -4,7 +4,7 @@ from drf_yasg.views import get_schema_view
 
 WEIRDTEXT_API_DESCRIPTION = "API description of Weirdtext decoder"
 
-schema_view = get_schema_view(
+WeridTextSchema = get_schema_view(
    Info(
       title="Weirdtext API",
       default_version='v1',
@@ -17,10 +17,10 @@ schema_view = get_schema_view(
    permission_classes=[],
 )
 
-encoded_text_param = Parameter('encoded_text_param', IN_QUERY,\
+encoded_text_parameter = Parameter('encoded_text_param', IN_QUERY,\
         description="encoded text message", type=TYPE_STRING, required=True)
-word_list = Parameter('word_list', IN_QUERY,\
+word_list_parameter = Parameter('word_list', IN_QUERY,\
     description="sorted list of original words, contains only words which were shuffled",\
     type=TYPE_ARRAY, items=Items(type=TYPE_STRING), required=True)
-original_text = Parameter('original_text', IN_QUERY,\
+original_text_parameter = Parameter('original_text', IN_QUERY,\
     description="original message to check if encoded correctly", type=TYPE_STRING, required=True)

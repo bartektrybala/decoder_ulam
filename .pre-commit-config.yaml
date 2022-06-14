@@ -12,3 +12,7 @@ repos:
         entry: pylint
         language: system
         types: [python]
+        args:
+            # ignore docstring
+            - --disable=C0114
+            - --disable=C0116
