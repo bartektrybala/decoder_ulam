@@ -16,3 +16,10 @@ repos:
             # ignore docstring
             - --disable=C0114
             - --disable=C0116
+        # tests
+    -   id: django-test
+        name: django-test
+        entry: python3 weirdtext/manage.py test
+        always_run: true
+        pass_filenames: false
+        language: system
